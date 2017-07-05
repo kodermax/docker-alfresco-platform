@@ -62,6 +62,12 @@ RUN set -x && \
               webapps/host-manager
 
 
+RUN set -x && \
+    curl --silent --location \
+      https://github.com/kodermax/alfresco-s3-adapter/raw/master/alfresco-s3-adapter/target/alfresco-s3-adapter-1.0-SNAPSHOT.amp \
+      -o /root/amp/alfresco-s3-adapter-1.0-SNAPSHOT.amp && \
+    java -jar /root/alfresco-mmt.jar install /root/amp/ webapps/alfresco -nobackup -directory && \
+    rm /root/amp/alfresco-s3-adapter-1.0-SNAPSHOT.amp
 
 COPY assets/catalina.properties conf/catalina.properties
 COPY assets/server.xml conf/server.xml
