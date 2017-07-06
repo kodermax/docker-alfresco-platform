@@ -69,13 +69,15 @@ RUN set -x && \
     java -jar /root/alfresco-mmt.jar install /root/amp/ webapps/alfresco -nobackup -force -directory && \
     rm /root/amp/alfresco-s3-adapter-1.0-SNAPSHOT.amp
 
-RUN chmod +x assets/tuneglobal.sh
-RUN bash assets/tuneglobal.sh
+
 
 COPY assets/catalina.properties conf/catalina.properties
 COPY assets/server.xml conf/server.xml
 COPY assets/web.xml webapps/alfresco/WEB-INF/web.xml
 COPY assets/alfresco-global.properties webapps/alfresco/WEB-INF/classes/alfresco-global.properties
+COPY assets/tuneglobal.sh /root/tuneglobal.sh
+RUN chmod +x /root/tuneglobal.sh
+RUN bash /root/tuneglobal.sh
 
 ENV JAVA_OPTS " -XX:-DisableExplicitGC -Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Dfile.encoding=UTF-8 "
 
